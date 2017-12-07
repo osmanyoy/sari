@@ -14,19 +14,30 @@
 	<ui:define name="pageHeader">My Header</ui:define>
 	<ui:define name="body">
 
-		<f:view locale="tr">
-			<h:form>
-				<h:panelGrid columns="2">
-					<p:outputLabel for="nameInput" />
-					<p:inputText id="nameInput" value="#{myBean.name}" />
+		<h:form prependId="false">
+			<p:messages autoUpdate="true" />
+			<h:panelGrid columns="2">
+				<p:outputLabel for="nameInput" value="Name" />
+				<h:panelGroup>
+					<p:inputText id="nameInput" value="#{myBean.name}" required="true">
+						<p:clientValidator event="blur"></p:clientValidator>
+						<f:validateLength minimum="3" maximum="10"></f:validateLength>
+					</p:inputText>
+					<p:message for="nameInput"></p:message>
+				</h:panelGroup>
 
-					<h:outputText value="Employee Name" />
-					<h:inputText value="#{myBean.employee.name}" />
+				<p:outputLabel value="Employee Name" for="zxp" />
+				<p:inputText id="zxp" value="#{myBean.employee.name}">
+					<p:ajax event="blur" process="nameInput" update="osmanPanel"></p:ajax>
+				</p:inputText>
 
-					<h:commandButton action="#{myBean.process()}" value="Submit" />
-				</h:panelGrid>
-			</h:form>
-		</f:view>
+				<p:commandButton action="#{myBean.process()}" value="Submit"
+					validateClient="true" />
+			</h:panelGrid>
+			<h:panelGroup id="osmanPanel">
+				<p:inputText id="osman" value="#{myBean.name}"></p:inputText>
+			</h:panelGroup>
+		</h:form>
 	</ui:define>
 	<ui:define name="footer">My Footer</ui:define>
 
