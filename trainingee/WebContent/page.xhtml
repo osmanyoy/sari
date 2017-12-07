@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<!-- 
+		Replace path to template, title, header and body
+		with actual data.
+	 -->
+<ui:composition template="template1.xhtml">
+	<ui:define name="pageTitle">My title</ui:define>
+	<ui:define name="pageHeader">My Header</ui:define>
+	<ui:define name="body">
+
+		<f:view locale="tr">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel for="nameInput" />
+					<p:inputText id="nameInput" value="#{myBean.name}" />
+
+					<h:outputText value="Employee Name" />
+					<h:inputText value="#{myBean.employee.name}" />
+
+					<h:commandButton action="#{myBean.process()}" value="Submit" />
+				</h:panelGrid>
+			</h:form>
+		</f:view>
+	</ui:define>
+	<ui:define name="footer">My Footer</ui:define>
+
+</ui:composition>
+
+
+</html>
