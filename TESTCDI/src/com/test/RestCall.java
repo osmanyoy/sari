@@ -3,6 +3,8 @@ package com.test;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,6 +16,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
 @Path("/test")
+@DeclareRoles({ "group1",
+                "admin" })
 @RequestScoped
 public class RestCall implements Serializable {
 
@@ -25,6 +29,7 @@ public class RestCall implements Serializable {
 	@Named("executeV2")
 	private IExecute execute;
 
+	@RolesAllowed("admin")
 	@GET
 	public String exec() {
 		return "C:" + this.countx++ + this.execute.execute();

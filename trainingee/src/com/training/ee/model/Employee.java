@@ -31,6 +31,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Vetoed
 @NamedQueries({ @NamedQuery(name = "getAllEmployees", query = "select e from Employee e"),
@@ -40,6 +41,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "calisan", indexes = { @Index(name = "name_index", columnList = "isim") })
 @SecondaryTable(name = "yetkiler")
+@XmlRootElement
 public class Employee {
 
 	@Id
