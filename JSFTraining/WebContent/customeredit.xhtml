@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="template_old.xhtml">
+	<ui:define name="pageTitle">Title</ui:define>
+	<ui:define name="pageHeader">Header</ui:define>
+	<ui:define name="body">
+		<h:form>
+			<h:inputHidden value="#{ctb.customer.customerId}" /> 
+			<h:panelGrid columns="2">
+				<h:outputLabel value="name" />
+				<h:inputText value="#{ctb.customer.name}" />
+
+				<h:outputLabel value="surname" />
+				<h:inputText value="#{ctb.customer.surname}" />
+
+				<h:outputLabel value="age" />
+				<h:inputText value="#{ctb.customer.age}" />
+
+				<h:commandButton action="#{ctb.updateCustomer()}" value="Update" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+	<ui:define name="footer">Customer Footer Text</ui:define>
+</ui:composition>
+
+
+</html>

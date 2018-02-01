@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<p:dialog id="phoneEntryDialogId" modal="true" widgetVar="phoneDialog">
+		<h:form id="phoneForm" prependId="false">
+
+			<h:inputHidden value="#{phoneBookBean.phoneBookItem.pbId}" />
+
+			<h:panelGrid columns="3">
+				<p:outputLabel value="Name" for="phoneName" />
+				<p:inputText id="phoneName"
+					value="#{phoneBookBean.phoneBookItem.name}" required="true">
+					<p:clientValidator event="blur"></p:clientValidator>
+				</p:inputText>
+				<p:message for="phoneName" />
+
+				<p:outputLabel value="Surname" for="phoneSurname" />
+				<p:inputText id="phoneSurname"
+					value="#{phoneBookBean.phoneBookItem.surname}" required="true">
+					<p:clientValidator event="blur"></p:clientValidator>
+				</p:inputText>
+				<p:message for="phoneSurname" />
+
+				<p:outputLabel value="Phone" for="phonePhone" />
+				<p:inputText id="phonePhone"
+					value="#{phoneBookBean.phoneBookItem.phone}" required="true">
+					<p:clientValidator event="blur"></p:clientValidator>
+				</p:inputText>
+				<p:message for="phonePhone" />
+
+				<p:outputLabel value="Address" for="phoneAddress" />
+				<p:inputText id="phoneAddress"
+					value="#{phoneBookBean.phoneBookItem.address}" required="true">
+					<p:clientValidator event="blur"></p:clientValidator>
+				</p:inputText>
+				<p:message for="phoneAddress" />
+
+				<p:outputLabel value="city" for="phoneCity" />
+				<p:selectOneMenu id="phoneCity" value="#{phoneBookBean.phoneBookItem.city}">
+					<f:selectItem itemLabel="Please select city" />
+					<f:selectItems value="#{addressManagerBean.cities}" var="cl"
+						itemLabel="${cl.cityName}" itemValue="${cl.cityName}" />
+					<p:clientValidator event="blur"></p:clientValidator>
+					<p:ajax event="change" process="phoneCity" update="phoneTown"></p:ajax>
+				</p:selectOneMenu>
+				<p:message for="phoneCity" />
+
+				<p:outputLabel value="town" for="phoneTown" />
+				<p:selectOneMenu id="phoneTown" value="#{phoneBookBean.phoneBookItem.town}" disabled="#{phoneBookBean.disableTown()}">
+					<f:selectItem itemLabel="Please select town" />
+					<f:selectItems value="#{phoneBookBean.towns}" var="cl"
+						itemLabel="${cl.townName}" itemValue="${cl.townName}" />
+					<p:clientValidator event="blur"></p:clientValidator>
+				</p:selectOneMenu>
+				<p:message for="phoneTown" />
+
+
+				<p:commandButton value="#{phoneBookBean.buttonName}" validateClient="true"
+					process="@form" update="@form :ptForm:phoneTable"
+					actionListener="#{phoneBookBean.savePhoneEntry}" oncomplete="if (!args.validationFailed){ PF('phoneDialog').hide();}" />
+
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</ui:composition>
+</html>
