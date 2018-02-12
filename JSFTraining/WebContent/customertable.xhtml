@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<!-- 
+		Replace path to template, title, header and body
+		with actual data.
+	 -->
+<ui:composition template="template_old.xhtml">
+	<ui:define name="pageTitle">Customer Table</ui:define>
+	<ui:define name="pageHeader">Customers</ui:define>
+	<ui:define name="body">
+		<h:form>
+			<h:dataTable value="#{ctb.customerList}" var="cust">
+				<h:column>
+					<f:facet name="header">ID</f:facet>
+						#{cust.customerId}
+					</h:column>
+				<h:column>
+					<f:facet name="header">NAME</f:facet>
+						#{cust.name}
+					</h:column>
+				<h:column>
+					<f:facet name="header">SURNAME</f:facet>
+						#{cust.surname}
+					</h:column>
+				<h:column>
+					<f:facet name="header">AGE</f:facet>
+						#{cust.age}
+					</h:column>
+				<h:column>
+					<f:facet name="header">OPERATIONS</f:facet>
+					<h:commandButton action="#{ctb.editCustomer(cust)}" value="E" />
+					<h:commandButton action="#{ctb.deleteCustomer(cust)}" value="D" />
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</ui:define>
+	<ui:define name="footer">Customer Footer Text</ui:define>
+
+</ui:composition>
+
+</html>

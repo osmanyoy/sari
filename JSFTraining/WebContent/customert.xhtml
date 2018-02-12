@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="template.xhtml">
+	<ui:define name="title">Customer Girişi</ui:define>
+	<ui:define name="breadcrumb">Customer Girişi</ui:define>
+	<ui:define name="contentName">Customer</ui:define>
+	<ui:define name="bilgi">
+		<f:loadBundle basename="com.training.jsf.properties.test" var="xyz" />
+
+		<h:form prependId="false">
+			
+			<h:inputHidden value="#{musteri.customer.customerId}" />
+			
+			<p:inputText id="offerId" value="#{musteri.offer}">
+				<p:ajax event="blur" process="offerId" update="musteriName" listener="#{musteri.offerUpdate}" 
+						onstart="alert('başlıyorum');" onsuccess="alert('Başarılı');" oncomplete="alert('bitti');" onerror="alert('error');" ></p:ajax>
+			</p:inputText>
+			
+			<h:panelGrid columns="3">
+				<p:outputLabel value="${msg['customer.page.name']}"
+					for="musteriName" />
+				<p:inputText id="musteriName" value="#{musteri.customer.name}"
+					required="true">
+					<p:ajax event="keyup" update="offerId :growlMsgId" listener="#{musteri.offerAction}"></p:ajax>
+					<p:clientValidator event="blur"></p:clientValidator>
+				</p:inputText>
+				<p:message for="musteriName" />
+
+				<p:outputLabel value="${msg['customer.page.surnme']}" for="musteriSurname" />
+				<p:inputText id="musteriSurname" value="#{musteri.customer.surname}" validator="com.training.jsf.validator.CustomValidator">
+					<f:validateLength minimum="3" maximum="30"></f:validateLength>
+				</p:inputText>
+				<p:message for="musteriSurname" />
+
+				<p:outputLabel value="${xyz['test.property']}" />
+				<p:inputText id="musteriAge" value="#{musteri.customer.age}">
+					<f:validateLongRange minimum="10" maximum="100"></f:validateLongRange>
+				</p:inputText>
+				<p:message for="musteriAge" />
+
+				<p:outputLabel value="Address" for="musteriAddress" />
+				<p:inputText id="musteriAddress" value="#{musteri.customer.address}" converter="com.training.jsf.converter.AddressConverter">
+				</p:inputText>
+				<p:message for="musteriAddress" />
+
+				<p:outputLabel for="musteriBirthdate" value="Birthday:" />
+				<p:calendar id="musteriBirthdate"
+					value="#{musteri.customer.birthDate}" />
+				<p:message for="musteriBirthdate" />
+
+				<p:outputLabel value="city" for="musteriCity2" />
+				<p:selectOneMenu id="musteriCity2" value="#{musteri.customer.city}">
+					<f:selectItem itemLabel="Please select city" />
+					<f:selectItems value="#{musteri.cityList}" var="cl"
+						itemLabel="${cl}" itemValue="${cl}" />
+				</p:selectOneMenu>
+				<p:message for="musteriCity2" />
+
+				<p:commandButton value="#{musteri.buttonName}" validateClient="true" process="@form"
+					update="@form customerTable"
+					actionListener="#{musteri.saveCustomerAction}" />
+
+			</h:panelGrid>
+
+			<p:dataTable id="customerTable" value="#{ctb.customerList}" var="cst" rows="5" paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+				<p:column headerText="ID">
+					<h:outputText value="#{cst.customerId}" />
+				</p:column>
+				<p:column headerText="NAME">
+					<h:outputText value="#{cst.name}" />
+				</p:column>
+				<p:column headerText="SURNAME">
+					<h:outputText value="#{cst.surname}" />
+				</p:column>
+				<p:column headerText="AGE">
+					<h:outputText value="#{cst.age}" />
+				</p:column>
+				<p:column headerText="BIRTHDAY">
+					<h:outputText value="#{cst.birthDate}" />
+				</p:column>
+				<p:column headerText="CITY">
+					<h:outputText value="#{cst.city}" />
+				</p:column>
+				<p:column headerText="OPERATIONS">
+					<p:commandButton value="E" process="@this"
+						update="@form"
+						actionListener="#{musteri.editCustomer(cst)}" />
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
+	</ui:define>
+	<ui:define name="footer">Customer Footer Text</ui:define>
+</ui:composition>
+
+</html>

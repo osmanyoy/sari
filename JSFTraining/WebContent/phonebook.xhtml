@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="template.xhtml">
+	<ui:define name="title">Phonebook Girişi</ui:define>
+	<ui:define name="breadcrumb">Phonebook Girişi</ui:define>
+	<ui:define name="contentName">Phonebook</ui:define>
+	<ui:define name="bilgi">
+
+		<ui:include src="/phonebookform.xhtml" />
+		<h:form id="ptForm" prependId="false">
+			
+			<p:dataTable id="phoneTable" value="#{userBean.phoneBookItems}" var="pbi" rows="5" paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" emptyMessage="No Phone Entry">
+				<p:column headerText="ID">
+					<h:outputText value="#{pbi.pbId}" />
+				</p:column>
+				<p:column headerText="NAME">
+					<h:outputText value="#{pbi.name}" />
+				</p:column>
+				<p:column headerText="SURNAME">
+					<h:outputText value="#{pbi.surname}" />
+				</p:column>
+				<p:column headerText="PHONE">
+					<h:outputText value="#{pbi.phone}" />
+				</p:column>
+				<p:column headerText="ADDRESS">
+					<h:outputText value="#{pbi.address}" />
+				</p:column>
+				<p:column headerText="CITY">
+					<h:outputText value="#{pbi.city}" />
+				</p:column>
+				<p:column headerText="TOWN">
+					<h:outputText value="#{pbi.town}" />
+				</p:column>
+				<p:column headerText="OPERATIONS">
+					<p:commandButton value="E" process="@this"
+						update="@form"
+						/>
+				</p:column>
+			</p:dataTable>
+			<p:commandButton value="add" update=":phoneForm" oncomplete="alert('bitti'); PF('phoneDialog').show();"></p:commandButton>
+		</h:form>
+	</ui:define>
+	<ui:define name="footer">Customer Footer Text</ui:define>
+</ui:composition>
+
+</html>
