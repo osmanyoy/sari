@@ -127,7 +127,7 @@ public class MyRestService implements Serializable {
 			                                       5))
 			               .build();
 		}
-		return Response.status(HttpResponseCodes.SC_BAD_GATEWAY)
+		return Response.status(HttpResponseCodes.SC_OK)
 		               .entity("Hello " + name + " " + age)
 		               .build();
 	}
