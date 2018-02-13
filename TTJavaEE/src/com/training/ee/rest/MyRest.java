@@ -1,7 +1,11 @@
 package com.training.ee.rest;
 
 import javax.ejb.EJB;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
 import javax.ws.rs.BeanParam;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -10,18 +14,22 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 
 import com.training.ee.ejb.PersonDAO;
 import com.training.ee.model.Person;
 
 @Path("/my")
+@WebService(targetNamespace="http://www.tttraining.com")
 public class MyRest {
 
     @EJB
     private PersonDAO personDAO;
     
     @GET
+    @WebMethod(exclude=true)
     public String hello() {
         return "Hello TT : " + personDAO.getId();
     }
@@ -147,6 +155,16 @@ public class MyRest {
                + " mid : "
                + person.getMid()
                ;
+    }
+
+    @POST
+    @Path("/z8")
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @WebMethod(operationName="helloTest")
+    public Person hello8(@WebParam(name="person") Person person) {
+        //personDAO.save(person);
+        return person;
     }
 
 }
