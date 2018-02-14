@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.validation.Valid;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
@@ -164,7 +165,7 @@ public class MyRest {
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @WebMethod(operationName="helloTest")
-    public Person hello8(@WebParam(name="person") Person person) {
+    public Person hello8(@WebParam(name="person") @Valid Person person) {
         personDAO.save(person);
         return person;
     }
