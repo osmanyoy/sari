@@ -1,5 +1,6 @@
 package com.training.ee.ejb;
 
+import java.util.Base64;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -38,7 +39,14 @@ public class PersonDAO {
     }
 
     public List<Person> getPersonByName(String name) {
-        TypedQuery<Person> createQuery = entityManager.createQuery("select a from Person where a.name = :isim",
+        TypedQuery<Person> createQuery = entityManager.createQuery("select a from Person a where a.name = :isim",
+                                                                   Person.class);
+        createQuery.setParameter("isim", name);
+        return createQuery.getResultList();
+    }
+
+    public List<Person> getPersonByName2(String name) {
+        TypedQuery<Person> createQuery = entityManager.createNamedQuery("select_by_name",
                                                                    Person.class);
         createQuery.setParameter("isim", name);
         return createQuery.getResultList();
@@ -49,6 +57,19 @@ public class PersonDAO {
                                                                          Person.class);
         createNativeQuery.setParameter("isim", name);
         return createNativeQuery.getResultList();
+    }
+
+    public List<Person> getPersonByName3(String name) {
+        TypedQuery<Person> createQuery = entityManager.createNamedQuery("select_by_name_native",
+                                                                   Person.class);
+        createQuery.setParameter("isim", name);
+        return createQuery.getResultList();
+    }
+    
+    public void test() {
+        String encodeToString = Base64.getEncoder().encodeToString("osman12".getBytes());
+        String raw = new String(Base64.getDecoder().decode(encodeToString));
+        
     }
 
 }

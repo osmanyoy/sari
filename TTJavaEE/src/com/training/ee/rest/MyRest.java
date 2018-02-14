@@ -1,5 +1,7 @@
 package com.training.ee.rest;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -163,8 +165,16 @@ public class MyRest {
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @WebMethod(operationName="helloTest")
     public Person hello8(@WebParam(name="person") Person person) {
-        //personDAO.save(person);
+        personDAO.save(person);
         return person;
     }
+    
+    @POST
+    @Path("/z9")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Person> hello9(@WebParam(name="person") @QueryParam("name") String name) {
+        return personDAO.getPersonByName(name);
+    }
+    
 
 }
