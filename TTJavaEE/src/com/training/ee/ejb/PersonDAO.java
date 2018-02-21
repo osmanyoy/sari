@@ -2,7 +2,10 @@ package com.training.ee.ejb;
 
 import java.util.Base64;
 import java.util.List;
+import java.util.concurrent.Future;
 
+import javax.ejb.AsyncResult;
+import javax.ejb.Asynchronous;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -10,6 +13,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.websocket.RemoteEndpoint.Async;
+import javax.ws.rs.container.AsyncResponse;
 
 import com.training.ee.model.Person;
 
@@ -70,6 +75,11 @@ public class PersonDAO {
         String encodeToString = Base64.getEncoder().encodeToString("osman12".getBytes());
         String raw = new String(Base64.getDecoder().decode(encodeToString));
         
+    }
+    
+    @Asynchronous
+    public Future<Person> findPerson(long personId){
+        return new AsyncResult<Person>( entityManager.find(Person.class, personId));
     }
 
 }

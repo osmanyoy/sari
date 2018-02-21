@@ -1,6 +1,8 @@
 package com.training.ee.rest;
 
 import java.util.List;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import javax.ejb.EJB;
 import javax.jws.WebMethod;
@@ -177,5 +179,26 @@ public class MyRest {
         return personDAO.getPersonByName(name);
     }
     
+    @POST
+    @Path("/z10")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Person hello10(@QueryParam("pid") long personId) {
+        Future<Person> findPerson = personDAO.findPerson(personId);
+        
+        System.out.println("Birþey");
+        System.out.println("Ýki þey");
+        System.out.println("Üç þey");
+        Person person = null;
+        try {
+            if (findPerson.isDone()) {
+                // person = findPerson.get(1000,TimeUnit.MILLISECONDS);
+                person = findPerson.get();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return person;
+    }
 
 }

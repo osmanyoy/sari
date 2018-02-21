@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="myjob" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/jobXML_1_0.xsd"
+	version="1.0">
+	<listeners>
+		<listener ref="myJobListener"></listener>
+	</listeners>
+	<step id="step1">
+		<listeners>
+			<listener ref="myStepListener"></listener>
+			<listener ref="myChunkListener"></listener>
+			<listener ref="myReaderListener"></listener>
+		</listeners>
+		<chunk item-count="5">
+			<reader ref="myreader"></reader>
+			<processor ref="myprocessor"></processor>
+			<writer ref="mywriter"></writer>
+		</chunk>
+	</step>
+	<!-- <step id="step2"> <batchlet ref=""></batchlet> <end on="COMPLETED" 
+		/> </step> -->
+</job>
